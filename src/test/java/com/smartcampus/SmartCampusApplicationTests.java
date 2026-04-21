@@ -19,62 +19,65 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@SuppressWarnings("null")
 class SmartCampusApplicationTests {
 
-    @Autowired
-    private EventService eventService;
+        @Autowired
+        private EventService eventService;
 
-    @Autowired
-    private EventRepository eventRepository;
+        @Autowired
+        private EventRepository eventRepository;
 
-    @Autowired
-    private MockMvc mockMvc;
+        @Autowired
+        private MockMvc mockMvc;
 
-    @Test
-    void filteredEventsAndStatisticsLoadFromContext() {
-        var events = eventService.getFilteredEvents("Computer Science", "Workshop", null);
-        var statistics = eventService.getEventStatistics(events);
+        @Test
+        void filteredEventsAndStatisticsLoadFromContext() {
+                var events = eventService.getFilteredEvents("Computer Science", "Workshop", null);
+                var statistics = eventService.getEventStatistics(events);
 
-        assertThat(events).isNotEmpty();
-        assertThat(statistics.totalEvents()).isGreaterThan(0);
-        assertThat(statistics.totalRegistrations()).isGreaterThanOrEqualTo(0);
-    }
+                assertThat(events).isNotEmpty();
+                assertThat(statistics.totalEvents()).isGreaterThan(0);
+                assertThat(statistics.totalRegistrations()).isGreaterThanOrEqualTo(0);
+        }
 
-    @Test
-    void homePageRendersUpcomingEvents() throws Exception {
-        mockMvc.perform(get("/"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("index"))
-                .andExpect(content().string(org.hamcrest.Matchers.containsString("Student Event Feed")));
-    }
+        @Test
+        void homePageRendersUpcomingEvents() throws Exception {
+                mockMvc.perform(get("/"))
+                                .andExpect(status().isOk())
+                                .andExpect(view().name("index"))
+                                .andExpect(content()
+                                                .string(org.hamcrest.Matchers.containsString("Student Event Feed")));
+        }
 
-    @Test
-    void eventDetailsPageRendersForSeededEvent() throws Exception {
-        Long eventId = eventRepository.findAll().stream()
-                .findFirst()
-                .orElseThrow()
-                .getId();
+        @Test
+        void eventDetailsPageRendersForSeededEvent() throws Exception {
+                Long eventId = eventRepository.findAll().stream()
+                                .findFirst()
+                                .orElseThrow()
+                                .getId();
 
-        mockMvc.perform(get("/events/{id}", eventId))
-                .andExpect(status().isOk())
-                .andExpect(view().name("event-details"));
-    }
+                mockMvc.perform(get("/events/{id}", eventId))
+                                .andExpect(status().isOk())
+                                .andExpect(view().name("event-details"));
+        }
 
-    @Test
-    void restApiReturnsUpcomingEventsAndStatistics() throws Exception {
-        mockMvc.perform(get("/api/events"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))));
+        @Test
+        @SuppressWarnings("null")
+        void restApiReturnsUpcomingEventsAndStatistics() throws Exception {
+                mockMvc.perform(get("/api/events"))
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(1))));
 
-        mockMvc.perform(get("/api/events/stats"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.totalEvents").value(greaterThanOrEqualTo(1)))
-                .andExpect(jsonPath("$.totalRegistrations").value(greaterThanOrEqualTo(0)));
-    }
+                mockMvc.perform(get("/api/events/stats"))
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.totalEvents").value(greaterThanOrEqualTo(1)))
+                                .andExpect(jsonPath("$.totalRegistrations").value(greaterThanOrEqualTo(0)));
+        }
 
-    @Test
-    void adminDashboardRequiresAuthentication() throws Exception {
-        mockMvc.perform(get("/admin/dashboard"))
-                .andExpect(status().isUnauthorized());
-    }
+        @Test
+        void adminDashboardRequiresAuthentication() throws Exception {
+                mockMvc.perform(get("/admin/dashboard"))
+                                .andExpect(status().isUnauthorized());
+        }
 }

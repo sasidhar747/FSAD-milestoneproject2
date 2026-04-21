@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -22,16 +23,14 @@ public class EventService {
             "Electronics",
             "Management",
             "Placement Cell",
-            "General"
-    );
+            "General");
 
     private static final List<String> DEFAULT_EVENT_TYPES = List.of(
             "Workshop",
             "Seminar",
             "Hackathon",
             "Career Fair",
-            "Cultural"
-    );
+            "Cultural");
 
     @Autowired
     private EventRepository eventRepository;
@@ -103,12 +102,15 @@ public class EventService {
         return eventTypes.isEmpty() ? DEFAULT_EVENT_TYPES : eventTypes;
     }
 
+    @SuppressWarnings("null")
     public void refreshRegisteredCounts() {
         List<Event> events = eventRepository.findAll();
         boolean updated = false;
 
         for (Event event : events) {
-            int actualCount = Math.toIntExact(registrationRepository.countByEventId(event.getId()));
+            Long count = Objects.requireNonNull(registrationRepository.countByEventId(event.getId()),
+                    "Registration count cannot be null");
+            int actualCount = Math.toIntExact(count);
             if (event.getRegisteredCount() != actualCount) {
                 event.setRegisteredCount(actualCount);
                 updated = true;

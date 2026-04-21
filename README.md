@@ -24,6 +24,34 @@ Demo-ready Spring Boot web application for colleges and universities to manage c
 - `GET /api/events/{id}`
 - `GET /api/events/stats`
 
+## Technologies Stack
+
+**Frontend:**
+- Thymeleaf templating engine
+- HTML5, CSS3, Bootstrap (styles.css)
+- JavaScript (script.js)
+
+**Backend:**
+- Java 17
+- Spring Boot 3.2.0
+- Spring MVC, Spring Data JPA, Spring Security, Spring Validation
+- Lombok for boilerplate reduction
+
+**Database:**
+- H2 in-memory database (dev/demo)
+
+**Tools:**
+- Maven (wrapper mvnw.cmd)
+- JPA/Hibernate ORM
+- HikariCP connection pool
+- Tomcat embedded server
+
+**Hardware/Software Requirements:**
+- Java 17+ (tested with Java 25)
+- Maven 3.8+
+- 2GB RAM min, modern browser
+- Windows/Mac/Linux
+
 ## Technical Highlights
 - Spring Core dependency injection with `@Autowired`
 - Spring MVC controllers using `@Controller`, `@GetMapping`, and `@PostMapping`

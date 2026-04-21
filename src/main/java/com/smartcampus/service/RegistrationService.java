@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class RegistrationService {
@@ -27,8 +28,10 @@ public class RegistrationService {
     private EventRepository eventRepository;
 
     @Transactional
+    @SuppressWarnings("null")
     public Registration registerStudent(RegistrationForm form, User student) {
-        Event event = eventRepository.findById(form.getEventId())
+        Long eventId = Objects.requireNonNull(form.getEventId(), "Event ID cannot be null");
+        Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new ResourceNotFoundException("Event not found"));
 
         if (registrationRepository.existsByEventIdAndStudentEmailIgnoreCase(event.getId(), student.getEmail())) {
@@ -63,12 +66,14 @@ public class RegistrationService {
     }
 
     @Transactional
+    @SuppressWarnings("null")
     public void saveFeedback(Long registrationId, String studentEmail, boolean adminUser, int rating, String feedback) {
         Registration registration = adminUser
                 ? registrationRepository.findById(registrationId)
-                .orElseThrow(() -> new ResourceNotFoundException("Registration not found"))
+                        .orElseThrow(() -> new ResourceNotFoundException("Registration not found"))
                 : registrationRepository.findByIdAndStudentEmailIgnoreCase(registrationId, studentEmail)
-                .orElseThrow(() -> new AccessDeniedOperationException("You can only submit feedback for your own registrations"));
+                        .orElseThrow(() -> new AccessDeniedOperationException(
+                                "You can only submit feedback for your own registrations"));
 
         if (rating < 1 || rating > 5) {
             throw new IllegalArgumentException("Rating must be between 1 and 5");
