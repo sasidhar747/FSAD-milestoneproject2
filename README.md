@@ -95,7 +95,7 @@ Admin pages are available under `http://localhost:8081/admin/dashboard` and use 
 - H2 console: [http://localhost:8081/h2-console](http://localhost:8081/h2-console)
 - JDBC URL: `jdbc:h2:mem:campusdb`
 - Username: `sa`
-- Password: `password`
+- Password: `Pass`
 
 ## Test Verification
 

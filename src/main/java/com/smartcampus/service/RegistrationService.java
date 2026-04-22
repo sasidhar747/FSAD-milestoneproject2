@@ -28,9 +28,11 @@ public class RegistrationService {
     private EventRepository eventRepository;
 
     @Transactional
-    @SuppressWarnings("null")
     public Registration registerStudent(RegistrationForm form, User student) {
-        Long eventId = Objects.requireNonNull(form.getEventId(), "Event ID cannot be null");
+        Long eventId = form.getEventId();
+        if (eventId == null) {
+            throw new IllegalArgumentException("Event ID cannot be null");
+        }
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new ResourceNotFoundException("Event not found"));
 
@@ -66,7 +68,6 @@ public class RegistrationService {
     }
 
     @Transactional
-    @SuppressWarnings("null")
     public void saveFeedback(Long registrationId, String studentEmail, boolean adminUser, int rating, String feedback) {
         Registration registration = adminUser
                 ? registrationRepository.findById(registrationId)

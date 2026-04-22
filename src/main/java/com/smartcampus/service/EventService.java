@@ -102,17 +102,15 @@ public class EventService {
         return eventTypes.isEmpty() ? DEFAULT_EVENT_TYPES : eventTypes;
     }
 
-    @SuppressWarnings("null")
     public void refreshRegisteredCounts() {
         List<Event> events = eventRepository.findAll();
         boolean updated = false;
 
         for (Event event : events) {
-            Long count = Objects.requireNonNull(registrationRepository.countByEventId(event.getId()),
-                    "Registration count cannot be null");
-            int actualCount = Math.toIntExact(count);
-            if (event.getRegisteredCount() != actualCount) {
-                event.setRegisteredCount(actualCount);
+            Long countLong = registrationRepository.countByEventId(event.getId());
+            int count = (countLong != null) ? Math.toIntExact(countLong) : 0;
+            if (event.getRegisteredCount() != count) {
+                event.setRegisteredCount(count);
                 updated = true;
             }
         }
