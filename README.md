@@ -1,114 +1,59 @@
 # Smart Campus Event Management System
 
-Demo-ready Spring Boot web application for colleges and universities to manage campus events, workshops, seminars, and student registrations.
+Professional Spring Boot web application for managing campus events, workshops, seminars, and student registrations.
 
-## Core Features
-
-### Student Module
-- Browse only upcoming events through Thymeleaf MVC pages.
+## Features
+- Student sign up and login.
+- Browse upcoming events through MVC pages.
 - Filter events by department, type, and date.
-- Register for an event with validation.
-- View personal registration history after login.
-- Submit event feedback and ratings.
+- Register for events with server-side validation.
+- View personal registrations and submit feedback.
+- Admin CRUD operations for events.
+- Registration statistics with aggregate insights.
+- REST APIs for event listings and event statistics.
+- Global exception handling with Spring MVC.
+- HTTP Basic authentication for admin pages.
 
-### Admin Module
-- Secure admin access with HTTP Basic authentication.
-- Create, edit, and delete events using Spring Boot + JPA CRUD.
-- Search events with filters.
-- View attendee lists for each event.
-- Review aggregate event statistics such as total events, registrations, average attendance, and average feedback rating.
+## Technology Stack
+- Java 17+
+- Spring Boot 3.2
+- Spring MVC
+- Spring Data JPA
+- Spring Security
+- Thymeleaf
+- H2 Database
+- Maven Wrapper
 
-### REST API
-- `GET /api/events`
-- `GET /api/events?department=Computer Science&type=Workshop&date=2026-04-25`
-- `GET /api/events/{id}`
-- `GET /api/events/stats`
-
-## Technologies Stack
-
-**Frontend:**
-- Thymeleaf templating engine
-- HTML5, CSS3, Bootstrap (styles.css)
-- JavaScript (script.js)
-
-**Backend:**
-- Java 17
-- Spring Boot 3.2.0
-- Spring MVC, Spring Data JPA, Spring Security, Spring Validation
-- Lombok for boilerplate reduction
-
-**Database:**
-- H2 in-memory database (dev/demo)
-
-**Tools:**
-- Maven (wrapper mvnw.cmd)
-- JPA/Hibernate ORM
-- HikariCP connection pool
-- Tomcat embedded server
-
-**Hardware/Software Requirements:**
-- Java 17+ (tested with Java 25)
-- Maven 3.8+
-- 2GB RAM min, modern browser
-- Windows/Mac/Linux
-
-## Technical Highlights
-- Spring Core dependency injection with `@Autowired`
-- Spring MVC controllers using `@Controller`, `@GetMapping`, and `@PostMapping`
-- Spring Boot embedded Tomcat configuration
-- Spring Data JPA entity mapping with `@Entity`, `@Id`, and custom repository queries
-- Validation using `@NotBlank`, `@NotNull`, `@Email`, `@Size`, `@Min`, and `@Future`
-- Spring Security with student form login and admin HTTP Basic authentication
-- Global exception handling using `@ControllerAdvice`
-- HTML5, CSS3, and Thymeleaf frontend templates
-- H2 in-memory database with seeded demo data
-
-## Demo Credentials
-
-### Student Login
-- Email: `student@univ.edu`
-- Password: `student123`
-
-### Admin Login
-- Email: `admin@univ.edu`
-- Password: `admin123`
-
-Admin pages are available under `http://localhost:8081/admin/dashboard` and use the browser's HTTP Basic login prompt.
+## Demo Accounts
+- Student:
+  - Email: `student@univ.edu`
+  - Password: `student123`
+- Admin:
+  - Email: `admin@univ.edu`
+  - Password: `admin123`
 
 ## Run the Project
-1. Open a terminal in `project-2-smart-campus`.
+1. Open a terminal in the project folder.
 2. Start the application:
 
 ```powershell
 .\mvnw.cmd spring-boot:run
 ```
 
-3. Open [http://localhost:8081](http://localhost:8081).
+3. Open `http://localhost:8081`.
 
-## Professor Demo Flow
-1. Open the home page and explain event browsing, filtering, and the MVC student view.
-2. Login as `student@univ.edu` and show registration history plus feedback submission.
-3. Open `http://localhost:8081/api/events` and `http://localhost:8081/api/events/stats` to demonstrate REST APIs.
-4. Open `http://localhost:8081/admin/dashboard`, login with the admin account, and show CRUD operations, search filters, attendee management, and statistics.
+## REST API
+- `GET /api/events`
+- `GET /api/events/{id}`
+- `GET /api/events?department=Computer Science&type=Workshop&date=2026-05-10`
+- `GET /api/events/stats`
 
-## Database Console
-- H2 console: [http://localhost:8081/h2-console](http://localhost:8081/h2-console)
+## Admin Access
+- Admin dashboard: `http://localhost:8081/admin/dashboard`
+- Admin routes use the browser's HTTP Basic authentication prompt.
+
+## H2 Console
+- URL: `http://localhost:8081/h2-console`
 - JDBC URL: `jdbc:h2:mem:campusdb`
 - Username: `sa`
-- Password: `Pass`
-
-## Test Verification
-
-Run:
-
-```powershell
-.\mvnw.cmd test
-```
-
-The test suite verifies:
-- Spring context loading
-- Event filtering and statistics
-- Home page rendering
-- Event details page rendering
-- REST API responses
-- Admin authentication protection
+- Password: `password`

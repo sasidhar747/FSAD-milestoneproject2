@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-@SpringBootTest
+@SpringBootTest(properties = "debug=false")
 @AutoConfigureMockMvc
 class SmartCampusApplicationTests {
 
@@ -46,7 +46,7 @@ class SmartCampusApplicationTests {
                                 .andExpect(status().isOk())
                                 .andExpect(view().name("index"))
                                 .andExpect(content()
-                                                .string(org.hamcrest.Matchers.containsString("Student Event Feed")));
+                                                .string(org.hamcrest.Matchers.containsString("Upcoming Campus Events")));
         }
 
         @Test

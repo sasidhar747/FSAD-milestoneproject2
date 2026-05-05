@@ -55,7 +55,7 @@ public class SmartCampusApplication {
                                                 "Spring Boot Bootcamp",
                                                 "Hands-on workshop covering MVC, REST APIs, validation, and security for enterprise Java apps.",
                                                 LocalDateTime.now().plusDays(4).withHour(10).withMinute(0),
-                                                "Innovation Auditorium",
+                                                "Main Auditorium",
                                                 "Computer Science",
                                                 "Workshop",
                                                 80,
